@@ -18,13 +18,14 @@ theme:
 
 nav:
   - Home: index.md
-  - Example: ParameterTune.ipynb
+  - Example Analysis: ParameterTune.ipynb
+  - Example Plotting: Plotting.ipynb
   - API Reference: api.md
 
 plugins:
   - search
   - mknotebooks:
-      execute: false
+      execute: true
       write_markdown: true
       allow_errors: false
       timeout: 1200
