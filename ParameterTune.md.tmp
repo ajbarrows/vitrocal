@@ -56,8 +56,6 @@ from vitrocal.datasets import catalog, ExcelDataset
 from vitrocal.preprocessors import StandardPreprocessor
 from vitrocal.detectors import DerivativeDetector, StandardExtractor
 from vitrocal.analyzers import StandardAnalyzer
-
-from vitrocal.plotting import plot_events, plot_average_event
 ```
 
 </div>
@@ -102,6 +100,7 @@ def load_data(fpath: str | os.PathLike, load_args: dict={}) -&gt; pd.DataFrame:
 
 ```python
 df, fname = load_data("./data/01_raw/E Green.xlsx")
+# df, fname = load_data("../data/01_raw/E Green.xlsx")
 df.head()
 ```
 
@@ -1069,6 +1068,7 @@ These files don't have a header, and sometimes they have numbered rows like this
 
 ```python
 load_args = {'header': None, 'index_col': 0}
+# df, fname = load_data("./data/01_raw/E Green.xlsx", load_args)
 df, fname = load_data("./data/01_raw/E Green.xlsx", load_args)
 ```
 
@@ -1392,202 +1392,16 @@ avg_result.head()
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered" markdown="1">
-<div class="inner_cell" markdown="1">
-<div class="text_cell_render border-box-sizing rendered_html" markdown="1">
-## Plotting
-
-Jupyter notebooks are very helpful for making quick plots to confirm your intuition about an analysis problem. The syntax can be tricky: https://matplotlib.org
-
-[Seaborn](https://seaborn.pydata.org) can make life a little easier, but you generally need to work with `pandas.DataFrames` for the input data.
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" markdown="1">
-<div class="inner_cell" markdown="1">
-<div class="text_cell_render border-box-sizing rendered_html" markdown="1">
-## Average Events
-
-As an example, we might want to look at average intensity for a trace, or across all traces. 
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered" markdown="1">
 <div class="input">
 
 ```python
-global_average, roi_average, event_data = analyzer.find_average_event(events)
-global_average.head()
+# save results
+pd.to_pickle(events, "./data/02_output/demo_events.pkl") # python dictionary
+pd.to_pickle(analyzer, "./data/02_output/demo_analyzer.pkl") # python object
+result.to_csv("./data/02_output/demo_results.csv")
+avg_result.to_csv("./data/02_output/demo_avg_results.csv")
 ```
 
-</div>
-<div class="output_wrapper" markdown="1">
-<div class="output" markdown="1">
-<div class="output_area" markdown="1">
-<table>
-<thead>
-<tr>
-<th style="text-align:right"><br/><br/>index</th>
-<th style="text-align:right">q1<br/><br/> </th>
-<th style="text-align:right">q3<br/><br/> </th>
-<th style="text-align:right">median<br/><br/> </th>
-<th style="text-align:right">mean<br/><br/> </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right">0</td>
-<td style="text-align:right">-3.00963</td>
-<td style="text-align:right">8.86682</td>
-<td style="text-align:right">1.29585</td>
-<td style="text-align:right">3.84374</td>
-</tr>
-<tr>
-<td style="text-align:right">1</td>
-<td style="text-align:right">24.6512</td>
-<td style="text-align:right">48.0814</td>
-<td style="text-align:right">33.9981</td>
-<td style="text-align:right">40.1769</td>
-</tr>
-<tr>
-<td style="text-align:right">2</td>
-<td style="text-align:right">3.18477</td>
-<td style="text-align:right">26.4741</td>
-<td style="text-align:right">12.8264</td>
-<td style="text-align:right">17.6446</td>
-</tr>
-<tr>
-<td style="text-align:right">3</td>
-<td style="text-align:right">3.05635</td>
-<td style="text-align:right">25.6205</td>
-<td style="text-align:right">12.851</td>
-<td style="text-align:right">17.9426</td>
-</tr>
-<tr>
-<td style="text-align:right">4</td>
-<td style="text-align:right">2.526</td>
-<td style="text-align:right">25.4279</td>
-<td style="text-align:right">11.7944</td>
-<td style="text-align:right">17.0295</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" markdown="1">
-<div class="input">
-
-```python
-roi_average.head()
-```
-
-</div>
-<div class="output_wrapper" markdown="1">
-<div class="output" markdown="1">
-<div class="output_area" markdown="1">
-<table>
-<thead>
-<tr>
-<th style="text-align:right"></th>
-<th style="text-align:right">roi</th>
-<th style="text-align:right">index</th>
-<th style="text-align:right">q1</th>
-<th style="text-align:right">q3</th>
-<th style="text-align:right">median</th>
-<th style="text-align:right">mean</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right">0</td>
-<td style="text-align:right">2</td>
-<td style="text-align:right">0</td>
-<td style="text-align:right">-4.44124</td>
-<td style="text-align:right">-4.44124</td>
-<td style="text-align:right">-4.44124</td>
-<td style="text-align:right">-4.44124</td>
-</tr>
-<tr>
-<td style="text-align:right">1</td>
-<td style="text-align:right">2</td>
-<td style="text-align:right">1</td>
-<td style="text-align:right">27.2195</td>
-<td style="text-align:right">27.2195</td>
-<td style="text-align:right">27.2195</td>
-<td style="text-align:right">27.2195</td>
-</tr>
-<tr>
-<td style="text-align:right">2</td>
-<td style="text-align:right">2</td>
-<td style="text-align:right">2</td>
-<td style="text-align:right">21.2979</td>
-<td style="text-align:right">21.2979</td>
-<td style="text-align:right">21.2979</td>
-<td style="text-align:right">21.2979</td>
-</tr>
-<tr>
-<td style="text-align:right">3</td>
-<td style="text-align:right">2</td>
-<td style="text-align:right">3</td>
-<td style="text-align:right">14.791</td>
-<td style="text-align:right">14.791</td>
-<td style="text-align:right">14.791</td>
-<td style="text-align:right">14.791</td>
-</tr>
-<tr>
-<td style="text-align:right">4</td>
-<td style="text-align:right">2</td>
-<td style="text-align:right">4</td>
-<td style="text-align:right">21.0446</td>
-<td style="text-align:right">21.0446</td>
-<td style="text-align:right">21.0446</td>
-<td style="text-align:right">21.0446</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" markdown="1">
-<div class="input">
-
-```python
-plot_average_event(global_average)
-plt.show()
-```
-
-</div>
-<div class="output_wrapper" markdown="1">
-<div class="output" markdown="1">
-<div class="output_area" markdown="1">
-<div class="output_png output_subarea">
-<img alt="No description has been provided for this image" src="output_27_0.png"/>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" markdown="1">
-<div class="input">
-
-```python
-selected_roi = 15
-plot_average_event(roi_average[roi_average['roi'] == selected_roi],
-                   title='Average Event for ROI {}'.format(selected_roi))
-plt.show()
-```
-
-</div>
-<div class="output_wrapper" markdown="1">
-<div class="output" markdown="1">
-<div class="output_area" markdown="1">
-<div class="output_png output_subarea">
-<img alt="No description has been provided for this image" src="output_28_0.png"/>
-</div>
-</div>
-</div>
 </div>
 </div>

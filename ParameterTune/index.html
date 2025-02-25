@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://mpmbq2.github.io/vitrocal/ParameterTune/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Example - VitroCal</title>
+    <title>Example Analysis - VitroCal</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
@@ -17,7 +17,7 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Example";
+        var mkdocs_page_name = "Example Analysis";
         var mkdocs_page_input_path = "ParameterTune.ipynb";
         var mkdocs_page_url = "/vitrocal/ParameterTune/";
       </script>
@@ -49,13 +49,17 @@
                 </li>
               </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="#">Example</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Example Analysis</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#load-example-data-file">Load example data file</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#preprocess">Preprocess</a>
     </li>
     </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Plotting/">Example Plotting</a>
                 </li>
               </ul>
               <ul>
@@ -76,7 +80,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">Example</li>
+      <li class="breadcrumb-item active">Example Analysis</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/mpmbq2/vitrocal/edit/master/docs/ParameterTune.ipynb">Edit on mpmbq2/vitrocal</a>
     </li>
@@ -143,8 +147,6 @@
 <span class="kn">from</span> <span class="nn">vitrocal.preprocessors</span> <span class="kn">import</span> <span class="n">StandardPreprocessor</span>
 <span class="kn">from</span> <span class="nn">vitrocal.detectors</span> <span class="kn">import</span> <span class="n">DerivativeDetector</span><span class="p">,</span> <span class="n">StandardExtractor</span>
 <span class="kn">from</span> <span class="nn">vitrocal.analyzers</span> <span class="kn">import</span> <span class="n">StandardAnalyzer</span>
-
-<span class="kn">from</span> <span class="nn">vitrocal.plotting</span> <span class="kn">import</span> <span class="n">plot_events</span><span class="p">,</span> <span class="n">plot_average_event</span>
 </code></pre></div>
 
 </div>
@@ -187,6 +189,7 @@
 <div class="input">
 
 <div class="highlight"><pre><span></span><code><span class="n">df</span><span class="p">,</span> <span class="n">fname</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">(</span><span class="s2">&quot;./data/01_raw/E Green.xlsx&quot;</span><span class="p">)</span>
+<span class="c1"># df, fname = load_data(&quot;../data/01_raw/E Green.xlsx&quot;)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </code></pre></div>
 
@@ -1152,6 +1155,7 @@ These files don't have a header, and sometimes they have numbered rows like this
 <div class="input">
 
 <div class="highlight"><pre><span></span><code><span class="n">load_args</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;header&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;index_col&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+<span class="c1"># df, fname = load_data(&quot;./data/01_raw/E Green.xlsx&quot;, load_args)</span>
 <span class="n">df</span><span class="p">,</span> <span class="n">fname</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">(</span><span class="s2">&quot;./data/01_raw/E Green.xlsx&quot;</span><span class="p">,</span> <span class="n">load_args</span><span class="p">)</span>
 </code></pre></div>
 
@@ -1464,196 +1468,16 @@ the impacts different parameter combinations have on your data.</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="plotting">Plotting</h2>
-<p>Jupyter notebooks are very helpful for making quick plots to confirm your intuition about an analysis problem. The syntax can be tricky: https://matplotlib.org</p>
-<p><a href="https://seaborn.pydata.org">Seaborn</a> can make life a little easier, but you generally need to work with <code>pandas.DataFrames</code> for the input data.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="average-events">Average Events</h2>
-<p>As an example, we might want to look at average intensity for a trace, or across all traces. </p>
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="highlight"><pre><span></span><code><span class="n">global_average</span><span class="p">,</span> <span class="n">roi_average</span><span class="p">,</span> <span class="n">event_data</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">find_average_event</span><span class="p">(</span><span class="n">events</span><span class="p">)</span>
-<span class="n">global_average</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># save results</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="n">events</span><span class="p">,</span> <span class="s2">&quot;./data/02_output/demo_events.pkl&quot;</span><span class="p">)</span> <span class="c1"># python dictionary</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="n">analyzer</span><span class="p">,</span> <span class="s2">&quot;./data/02_output/demo_analyzer.pkl&quot;</span><span class="p">)</span> <span class="c1"># python object</span>
+<span class="n">result</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;./data/02_output/demo_results.csv&quot;</span><span class="p">)</span>
+<span class="n">avg_result</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;./data/02_output/demo_avg_results.csv&quot;</span><span class="p">)</span>
 </code></pre></div>
 
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<table>
-<thead>
-<tr>
-<th style="text-align:right"><br/><br/>index</th>
-<th style="text-align:right">q1<br/><br/> </th>
-<th style="text-align:right">q3<br/><br/> </th>
-<th style="text-align:right">median<br/><br/> </th>
-<th style="text-align:right">mean<br/><br/> </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right">0</td>
-<td style="text-align:right">-3.00963</td>
-<td style="text-align:right">8.86682</td>
-<td style="text-align:right">1.29585</td>
-<td style="text-align:right">3.84374</td>
-</tr>
-<tr>
-<td style="text-align:right">1</td>
-<td style="text-align:right">24.6512</td>
-<td style="text-align:right">48.0814</td>
-<td style="text-align:right">33.9981</td>
-<td style="text-align:right">40.1769</td>
-</tr>
-<tr>
-<td style="text-align:right">2</td>
-<td style="text-align:right">3.18477</td>
-<td style="text-align:right">26.4741</td>
-<td style="text-align:right">12.8264</td>
-<td style="text-align:right">17.6446</td>
-</tr>
-<tr>
-<td style="text-align:right">3</td>
-<td style="text-align:right">3.05635</td>
-<td style="text-align:right">25.6205</td>
-<td style="text-align:right">12.851</td>
-<td style="text-align:right">17.9426</td>
-</tr>
-<tr>
-<td style="text-align:right">4</td>
-<td style="text-align:right">2.526</td>
-<td style="text-align:right">25.4279</td>
-<td style="text-align:right">11.7944</td>
-<td style="text-align:right">17.0295</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="highlight"><pre><span></span><code><span class="n">roi_average</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</code></pre></div>
-
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<table>
-<thead>
-<tr>
-<th style="text-align:right"></th>
-<th style="text-align:right">roi</th>
-<th style="text-align:right">index</th>
-<th style="text-align:right">q1</th>
-<th style="text-align:right">q3</th>
-<th style="text-align:right">median</th>
-<th style="text-align:right">mean</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right">0</td>
-<td style="text-align:right">2</td>
-<td style="text-align:right">0</td>
-<td style="text-align:right">-4.44124</td>
-<td style="text-align:right">-4.44124</td>
-<td style="text-align:right">-4.44124</td>
-<td style="text-align:right">-4.44124</td>
-</tr>
-<tr>
-<td style="text-align:right">1</td>
-<td style="text-align:right">2</td>
-<td style="text-align:right">1</td>
-<td style="text-align:right">27.2195</td>
-<td style="text-align:right">27.2195</td>
-<td style="text-align:right">27.2195</td>
-<td style="text-align:right">27.2195</td>
-</tr>
-<tr>
-<td style="text-align:right">2</td>
-<td style="text-align:right">2</td>
-<td style="text-align:right">2</td>
-<td style="text-align:right">21.2979</td>
-<td style="text-align:right">21.2979</td>
-<td style="text-align:right">21.2979</td>
-<td style="text-align:right">21.2979</td>
-</tr>
-<tr>
-<td style="text-align:right">3</td>
-<td style="text-align:right">2</td>
-<td style="text-align:right">3</td>
-<td style="text-align:right">14.791</td>
-<td style="text-align:right">14.791</td>
-<td style="text-align:right">14.791</td>
-<td style="text-align:right">14.791</td>
-</tr>
-<tr>
-<td style="text-align:right">4</td>
-<td style="text-align:right">2</td>
-<td style="text-align:right">4</td>
-<td style="text-align:right">21.0446</td>
-<td style="text-align:right">21.0446</td>
-<td style="text-align:right">21.0446</td>
-<td style="text-align:right">21.0446</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="highlight"><pre><span></span><code><span class="n">plot_average_event</span><span class="p">(</span><span class="n">global_average</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="output_png output_subarea">
-<img alt="No description has been provided for this image" src="output_27_0.png"/>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="highlight"><pre><span></span><code><span class="n">selected_roi</span> <span class="o">=</span> <span class="mi">15</span>
-<span class="n">plot_average_event</span><span class="p">(</span><span class="n">roi_average</span><span class="p">[</span><span class="n">roi_average</span><span class="p">[</span><span class="s1">&#39;roi&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">selected_roi</span><span class="p">],</span>
-                   <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Average Event for ROI </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">selected_roi</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="output_png output_subarea">
-<img alt="No description has been provided for this image" src="output_28_0.png"/>
-</div>
-</div>
-</div>
 </div>
 </div>
               
@@ -1661,7 +1485,7 @@ the impacts different parameter combinations have on your data.</p>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href=".." class="btn btn-neutral float-left" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../api/" class="btn btn-neutral float-right" title="API Reference">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Plotting/" class="btn btn-neutral float-right" title="Example Plotting">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -1691,7 +1515,7 @@ the impacts different parameter combinations have on your data.</p>
       <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../api/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../Plotting/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
