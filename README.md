@@ -8,7 +8,7 @@ Calcium imaging toolbox for in vitro imaging
 To get started:
 
 ```bash
-git clone git@github.com:mpmbq2/vitrocal.git
+git clone git@github.com:ajbarrows/vitrocal.git
 cd vitrocal
 mamba env update -f environment.yml
 conda activate vitrocal
