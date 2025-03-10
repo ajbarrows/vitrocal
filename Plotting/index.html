@@ -151,7 +151,6 @@ See that Matplotlib and Seaborn documentation for more details.</p>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
-<span class="kn">from</span> <span class="nn">vitrocal.analyzers</span> <span class="kn">import</span> <span class="n">StandardAnalyzer</span>
 <span class="kn">from</span> <span class="nn">vitrocal.plotting</span> <span class="kn">import</span> <span class="n">plot_events</span><span class="p">,</span> <span class="n">plot_average_event</span>
 </code></pre></div>
 
@@ -167,8 +166,11 @@ See that Matplotlib and Seaborn documentation for more details.</p>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="highlight"><pre><span></span><code><span class="n">events</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="s2">&quot;./data/02_output/demo_events.pkl&quot;</span><span class="p">)</span> <span class="c1"># python dictionary</span>
-<span class="n">analyzer</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="s2">&quot;./data/02_output/demo_analyzer.pkl&quot;</span><span class="p">)</span> <span class="c1"># python object</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># events = pd.read_pickle(&quot;./data/02_output/demo_events.pkl&quot;) # python dictionary</span>
+<span class="c1"># analyzer = pd.read_pickle(&quot;./data/02_output/demo_analyzer.pkl&quot;) # python object</span>
+<span class="n">events</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/02_output/event_data.csv&quot;</span><span class="p">)</span>
+<span class="n">roi_average</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/02_output/roi_average.csv&quot;</span><span class="p">)</span>
+<span class="n">global_average</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/02_output/global_average.csv&quot;</span><span class="p">)</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/02_output/demo_results.csv&quot;</span><span class="p">)</span>
 <span class="n">avg_result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/02_output/demo_avg_results.csv&quot;</span><span class="p">)</span>
 </code></pre></div>
@@ -179,69 +181,6 @@ See that Matplotlib and Seaborn documentation for more details.</p>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="plot-average-traces">Plot average traces</h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="highlight"><pre><span></span><code><span class="n">global_average</span><span class="p">,</span> <span class="n">roi_average</span><span class="p">,</span> <span class="n">event_data</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">find_average_event</span><span class="p">(</span><span class="n">events</span><span class="p">)</span>
-<span class="n">global_average</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</code></pre></div>
-
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<table>
-<thead>
-<tr>
-<th style="text-align:right"><br/><br/>index</th>
-<th style="text-align:right">q1<br/><br/> </th>
-<th style="text-align:right">q3<br/><br/> </th>
-<th style="text-align:right">median<br/><br/> </th>
-<th style="text-align:right">mean<br/><br/> </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right">0</td>
-<td style="text-align:right">-3.00963</td>
-<td style="text-align:right">8.86682</td>
-<td style="text-align:right">1.29585</td>
-<td style="text-align:right">3.84374</td>
-</tr>
-<tr>
-<td style="text-align:right">1</td>
-<td style="text-align:right">24.6512</td>
-<td style="text-align:right">48.0814</td>
-<td style="text-align:right">33.9981</td>
-<td style="text-align:right">40.1769</td>
-</tr>
-<tr>
-<td style="text-align:right">2</td>
-<td style="text-align:right">3.18477</td>
-<td style="text-align:right">26.4741</td>
-<td style="text-align:right">12.8264</td>
-<td style="text-align:right">17.6446</td>
-</tr>
-<tr>
-<td style="text-align:right">3</td>
-<td style="text-align:right">3.05635</td>
-<td style="text-align:right">25.6205</td>
-<td style="text-align:right">12.851</td>
-<td style="text-align:right">17.9426</td>
-</tr>
-<tr>
-<td style="text-align:right">4</td>
-<td style="text-align:right">2.526</td>
-<td style="text-align:right">25.4279</td>
-<td style="text-align:right">11.7944</td>
-<td style="text-align:right">17.0295</td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 </div>
 </div>
@@ -261,7 +200,7 @@ See that Matplotlib and Seaborn documentation for more details.</p>
 <div class="output">
 <div class="output_area">
 <div class="output_png output_subarea">
-<img alt="No description has been provided for this image" src="output_8_0.png"/>
+<img alt="No description has been provided for this image" src="output_7_0.png"/>
 </div>
 </div>
 </div>
@@ -280,7 +219,7 @@ See that Matplotlib and Seaborn documentation for more details.</p>
 <div class="output">
 <div class="output_area">
 <div class="output_png output_subarea">
-<img alt="No description has been provided for this image" src="output_9_0.png"/>
+<img alt="No description has been provided for this image" src="output_8_0.png"/>
 </div>
 </div>
 </div>
@@ -321,7 +260,7 @@ See that Matplotlib and Seaborn documentation for more details.</p>
 </div>
 <div class="output_area">
 <div class="output_png output_subarea">
-<img alt="No description has been provided for this image" src="output_12_1.png"/>
+<img alt="No description has been provided for this image" src="output_11_1.png"/>
 </div>
 </div>
 </div>
@@ -346,7 +285,7 @@ See that Matplotlib and Seaborn documentation for more details.</p>
 </div>
 <div class="output_area">
 <div class="output_png output_subarea">
-<img alt="No description has been provided for this image" src="output_13_1.png"/>
+<img alt="No description has been provided for this image" src="output_12_1.png"/>
 </div>
 </div>
 </div>

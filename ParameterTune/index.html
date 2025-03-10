@@ -1155,7 +1155,7 @@ These files don't have a header, and sometimes they have numbered rows like this
 <div class="input">
 
 <div class="highlight"><pre><span></span><code><span class="n">load_args</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;header&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;index_col&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
-<span class="c1"># df, fname = load_data(&quot;./data/01_raw/E Green.xlsx&quot;, load_args)</span>
+<span class="c1"># df, fname = load_data(&quot;../data/01_raw/E Green.xlsx&quot;, load_args)</span>
 <span class="n">df</span><span class="p">,</span> <span class="n">fname</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">(</span><span class="s2">&quot;./data/01_raw/E Green.xlsx&quot;</span><span class="p">,</span> <span class="n">load_args</span><span class="p">)</span>
 </code></pre></div>
 
@@ -1471,9 +1471,20 @@ the impacts different parameter combinations have on your data.</p>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
+<div class="highlight"><pre><span></span><code><span class="n">global_average</span><span class="p">,</span> <span class="n">roi_average</span><span class="p">,</span> <span class="n">event_data</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">find_average_event</span><span class="p">(</span><span class="n">events</span><span class="p">)</span>
+<span class="n">global_average</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;./data/02_output/global_average.csv&quot;</span><span class="p">)</span>
+<span class="n">roi_average</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;./data/02_output/roi_average.csv&quot;</span><span class="p">)</span>
+<span class="n">event_data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;./data/02_output/event_data.csv&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
 <div class="highlight"><pre><span></span><code><span class="c1"># save results</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="n">events</span><span class="p">,</span> <span class="s2">&quot;./data/02_output/demo_events.pkl&quot;</span><span class="p">)</span> <span class="c1"># python dictionary</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="n">analyzer</span><span class="p">,</span> <span class="s2">&quot;./data/02_output/demo_analyzer.pkl&quot;</span><span class="p">)</span> <span class="c1"># python object</span>
+<span class="c1"># pd.to_pickle(events, &quot;./data/02_output/demo_events.pkl&quot;) # python dictionary</span>
+<span class="c1"># pd.to_pickle(analyzer, &quot;./data/02_output/demo_analyzer.pkl&quot;) # python object</span>
 <span class="n">result</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;./data/02_output/demo_results.csv&quot;</span><span class="p">)</span>
 <span class="n">avg_result</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;./data/02_output/demo_avg_results.csv&quot;</span><span class="p">)</span>
 </code></pre></div>
