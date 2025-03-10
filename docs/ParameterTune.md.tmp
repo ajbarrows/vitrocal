@@ -1068,7 +1068,7 @@ These files don't have a header, and sometimes they have numbered rows like this
 
 ```python
 load_args = {'header': None, 'index_col': 0}
-# df, fname = load_data("./data/01_raw/E Green.xlsx", load_args)
+# df, fname = load_data("../data/01_raw/E Green.xlsx", load_args)
 df, fname = load_data("./data/01_raw/E Green.xlsx", load_args)
 ```
 
@@ -1396,9 +1396,21 @@ avg_result.head()
 <div class="input">
 
 ```python
+global_average, roi_average, event_data = analyzer.find_average_event(events)
+global_average.to_csv("./data/02_output/global_average.csv")
+roi_average.to_csv("./data/02_output/roi_average.csv")
+event_data.to_csv("./data/02_output/event_data.csv")
+```
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" markdown="1">
+<div class="input">
+
+```python
 # save results
-pd.to_pickle(events, "./data/02_output/demo_events.pkl") # python dictionary
-pd.to_pickle(analyzer, "./data/02_output/demo_analyzer.pkl") # python object
+# pd.to_pickle(events, "./data/02_output/demo_events.pkl") # python dictionary
+# pd.to_pickle(analyzer, "./data/02_output/demo_analyzer.pkl") # python object
 result.to_csv("./data/02_output/demo_results.csv")
 avg_result.to_csv("./data/02_output/demo_avg_results.csv")
 ```

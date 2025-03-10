@@ -56,7 +56,8 @@ def analyze(events: dict, upper_decay_bound, lower_decay_bound) -> pd.DataFrame:
         lower_decay_bound=lower_decay_bound
     )
 
-    return analyzer.analyze(events)
+    # return analyzer.analyze(events)
+    return analyzer
 
 def save_data(df: pd.DataFrame,
               fname: str | os.PathLike,
@@ -90,7 +91,7 @@ def run(fpath_in: str | os.PathLike, load_args: dict={'header': None},
         baseline_threshold: float=10, bleach_period: float=60,
         detection_window: Tuple[int]=(3, 30), detection_threshold: float=20,
         upper_decay_bound: float=0.8, lower_decay_bound: float=0.2,
-        fpath_out: str | os.PathLike = "../data/02_intermediate/",
+        fpath_out: str | os.PathLike = "../data/02_output/",
         average=True
 ) -> None:
     """Produce analysis output for single input file.
@@ -102,9 +103,20 @@ def run(fpath_in: str | os.PathLike, load_args: dict={'header': None},
     df = preprocess(df, fps, bleach_period, filter_frequency,
                     baseline_threshold, preprocess_window_size)
     extracted_data = extract(df, detection_window, fps, detection_threshold)
-    results, avg_results = analyze(extracted_data, upper_decay_bound, lower_decay_bound)
+    # results, avg_results = analyze(extracted_data, upper_decay_bound, lower_decay_bound)
+    analyzer = analyze(extracted_data, upper_decay_bound, lower_decay_bound)
+
+    results, avg_results = analyzer.analyze(extracted_data)
+
+    global_average, roi_average, event_data = analyzer.find_average_event(
+                                                    extracted_data)
+
+    save_data(event_data, 'events_' + fname, fpath_out)
+    save_data(roi_average, 'roi_' + fname, fpath_out)
+    save_data(global_average, 'global_' + fname, fpath_out)
 
     save_data(results, fname, fpath_out)
+
 
     if average:
         fname_avg = fname.replace(".xlsx", "_avg.xlsx")
@@ -112,4 +124,4 @@ def run(fpath_in: str | os.PathLike, load_args: dict={'header': None},
 
 
 if __name__ == "__main__":
-    run(fpath_in="../data/01_raw/V3 Zori Green.xlsx")
+    run(fpath_in="../data/01_raw/E Green.xlsx")
